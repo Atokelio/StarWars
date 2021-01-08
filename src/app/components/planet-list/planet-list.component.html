@@ -1,0 +1,20 @@
+<div *ngIf="!loading; else loadingBlock">
+  <h2>Список планет</h2>
+
+  <div class="row row-head">
+    <div>Наименование</div>
+    <div>Диаметр, км.</div>
+    <div>Население, млн.</div>
+    <div>Действие</div>
+  </div>
+
+  <app-planet-list-item
+    *ngFor="let planet of (planetsService.planets$ | async)"
+    [planet]="planet"
+    (click)="planetsService.togglePlanet(planet)"
+  >
+  </app-planet-list-item>
+</div>
+<ng-template #loadingBlock>
+  <p class="loading">Загрузка...</p>
+</ng-template>

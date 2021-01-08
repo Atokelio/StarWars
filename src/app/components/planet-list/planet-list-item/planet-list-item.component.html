@@ -1,0 +1,13 @@
+<div class="row">
+  <div>{{planet.name}}</div>
+  <div>{{planet.diameter}}</div>
+  <div>{{planet.population}}</div>
+  <div>
+    <button
+      [class]="planet.inList ? 'btn in-list' : 'btn'"
+      (click)="togglePlanet()"
+    >
+      {{planet.inList ? 'В списке' : 'Хочу посетить'}}
+    </button>
+  </div>
+</div>

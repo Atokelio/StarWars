@@ -1,0 +1,9 @@
+<h2>Хочу посетить</h2>
+<p *ngIf="planetsService.wishlist.length; else blank">
+  {{planetsService.wishlist.join(', ')}}
+</p>
+
+<ng-template #blank>
+  <p>Список пуст</p>
+</ng-template>
+
