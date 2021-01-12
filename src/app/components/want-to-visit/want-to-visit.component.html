@@ -1,6 +1,6 @@
 <h2>Хочу посетить</h2>
-<p *ngIf="planetsService.wishlist.length; else blank">
-  {{planetsService.wishlist.join(', ')}}
+<p *ngIf="(wishlist$ | async).length ; else blank">
+  {{(wishlist$ | async).join(', ')}}
 </p>
 
 <ng-template #blank>

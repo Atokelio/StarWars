@@ -1,8 +1,8 @@
 import {environment} from '../../environments/environment';
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {delay, pluck} from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {catchError, delay, pluck, tap} from 'rxjs/operators';
 import {Planet} from '../interfaces/planet.interface';
 
 @Injectable({
@@ -10,31 +10,50 @@ import {Planet} from '../interfaces/planet.interface';
 })
 
 export class PlanetsService {
-  planets$: Observable<Planet[]>;
-  planets: Planet[] = [];
-  wishlist: string[] = [];
+  wishlist$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  planets$: BehaviorSubject<Planet[]> = new BehaviorSubject<Planet[]>([]);
+  error$: BehaviorSubject<HttpErrorResponse> = new BehaviorSubject<HttpErrorResponse>({} as HttpErrorResponse);
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
   }
 
   fetchPlanets(): void {
-    this.planets$ = this.http.get(environment.planetsURL)
+    this.loading$.next(true);
+
+    this.getPlanets().pipe(
+      tap(() => this.loading$.next(false)),
+      catchError((err: any) => {
+        this.error$.next(err);
+        this.loading$.next(false);
+        return of([]);
+      })
+    ).subscribe(
+      (planets: Planet[]) => this.planets$.next(planets)
+    );
+  }
+
+  getPlanets(): Observable<Planet[]> {
+    return this.http.get(environment.planetsURL)
       .pipe(delay(1500))
       .pipe(pluck('results'));
   }
 
   togglePlanet(planet: Planet): void {
+    const wishlist = [...this.wishlist$.value];
+    const inList = wishlist.includes(planet.name);
     planet.inList = !planet.inList;
-    const inList = this.wishlist.includes(planet.name);
 
     if (inList) {
-      this.wishlist.forEach((item, index) => {
+      wishlist.forEach((item, index) => {
         if (planet.name === item) {
-          this.wishlist.splice(index, 1);
+          wishlist.splice(index, 1);
         }
       });
     } else {
-      this.wishlist.push(planet.name);
+      wishlist.push(planet.name);
     }
+
+    this.wishlist$.next(wishlist);
   }
 }

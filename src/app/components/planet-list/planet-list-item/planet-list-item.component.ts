@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Planet} from '../../../interfaces/planet.interface';
 
 @Component({
   selector: 'app-planet-list-item',
   templateUrl: './planet-list-item.component.html',
-  styleUrls: ['./planet-list-item.component.scss']
+  styleUrls: ['./planet-list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanetListItemComponent implements OnInit {
 

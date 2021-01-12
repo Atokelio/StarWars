@@ -1,4 +1,4 @@
-<div *ngIf="!loading; else loadingBlock">
+<div *ngIf="!(loading$ | async); else loadingBlock">
   <h2>Список планет</h2>
 
   <div class="row row-head">
@@ -9,12 +9,17 @@
   </div>
 
   <app-planet-list-item
-    *ngFor="let planet of (planetsService.planets$ | async)"
+    *ngFor="let planet of (planets$ | async)"
     [planet]="planet"
-    (click)="planetsService.togglePlanet(planet)"
+    (click)="togglePlanet(planet)"
   >
   </app-planet-list-item>
+
+  <div *ngIf="(error$ | async).message">
+    <pre>{{(error$ | async).message}}</pre>
+  </div>
 </div>
+
 <ng-template #loadingBlock>
   <p class="loading">Загрузка...</p>
 </ng-template>
