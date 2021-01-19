@@ -16,6 +16,7 @@
   </app-planet-list-item>
 
   <div *ngIf="(error$ | async).message">
+    Появилась ошибка
     <pre>{{(error$ | async).message}}</pre>
   </div>
 </div>
