@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {PlanetsService} from '../../services/planets.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Planet} from '../../interfaces/planet.interface';
 import {HttpErrorResponse} from '@angular/common/http';
 import {
@@ -22,7 +23,7 @@ import {AppState} from '../../store/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanetListComponent implements OnInit {
-  planets$: BehaviorSubject<Planet[]> = new BehaviorSubject<Planet[]>([]);
+  planets$: Observable<Planet[]>;
 
   constructor(
     private readonly store: Store<AppState>,
@@ -34,9 +35,9 @@ export class PlanetListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select('planetsList').subscribe(({planets}) => {
-      this.planets$.next(planets);
-    });
+    this.planets$ = this.store.select('planetsList').pipe(
+      map(state => state.planets)
+    );
   }
 
   togglePlanet(planet: Planet): void {

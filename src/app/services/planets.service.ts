@@ -4,6 +4,9 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, delay, pluck, tap} from 'rxjs/operators';
 import {Planet} from '../interfaces/planet.interface';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/app.state';
+import { LoadPlanets } from '../store/planets.action';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,10 @@ export class PlanetsService {
   planets$: BehaviorSubject<Planet[]> = new BehaviorSubject<Planet[]>([]);
   error$: BehaviorSubject<HttpErrorResponse> = new BehaviorSubject<HttpErrorResponse>({} as HttpErrorResponse);
 
-  constructor(private readonly http: HttpClient) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly store: Store<AppState>
+    ) {
   }
 
   fetchPlanets(): void {
@@ -29,7 +35,9 @@ export class PlanetsService {
         return of([]);
       })
     ).subscribe(
-      (planets: Planet[]) => this.planets$.next(planets)
+      (planets: Planet[]) => {
+        this.store.dispatch(new LoadPlanets(planets));
+      }
     );
   }
 

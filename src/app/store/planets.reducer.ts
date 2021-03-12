@@ -1,23 +1,19 @@
-import { Action, createReducer, on } from '@ngrx/store';
-
-export interface Planet {
-  id: number;
-  name: string;
-  diameter: number;
-  population: number;
-  inList: boolean;
-}
+import { Action } from '@ngrx/store';
+import { PlanetsActions } from './planets.action';
+import { Planet } from '../interfaces/planet.interface';
 
 export const initialState = {
-    planets: [
-      {id: 1, name: 'Tatooine', diameter: 10465, population: 200002, inList: false },
-      {id: 2, name: 'Naboo', diameter: 12120, population: 45000001, inList: false }
-    ]
+    planets: []
   }
 ;
 
-export function PlanetsReducer(state = initialState, action: Action): any {
+export function PlanetsReducer(state = initialState, action: PlanetsActions) {
   switch (action.type) {
+    case 'LOAD_PLANETS':
+      return {
+        ...state,
+        planets: [...action.payload]
+      };
     default:
       return state;
   }
