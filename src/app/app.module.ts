@@ -7,7 +7,9 @@ import {WantToVisitComponent} from './components/want-to-visit/want-to-visit.com
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {StoreModule} from '@ngrx/store';
-import {PlanetsReducer} from './store/planets.reducer';
+import {reducers} from './store/reducers';
+import {EffectsModule} from '@ngrx/effects';
+import {PlanetsEffects} from './store/planets.effect';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import {PlanetsReducer} from './store/planets.reducer';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({planetsList: PlanetsReducer})
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([PlanetsEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {PlanetsService} from '../../services/planets.service';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import {Planet} from '../../interfaces/planet.interface';
 import {HttpErrorResponse} from '@angular/common/http';
 import {
@@ -13,7 +13,8 @@ import {
   PLANETS_ERROR
 } from './providers';
 import {Store} from '@ngrx/store';
-import {AppState} from '../../store/app.state';
+import { planetsFeatureKey } from '../../store/reducers/planets.reducer';
+import { AppState } from '../../store/reducers';
 
 @Component({
   selector: 'app-planet-list',
@@ -35,8 +36,8 @@ export class PlanetListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.planets$ = this.store.select('planetsList').pipe(
-      map(state => state.planets)
+    this.planets$ = this.store.select(planetsFeatureKey).pipe(
+      map((state) => state.planets)
     );
   }
 
