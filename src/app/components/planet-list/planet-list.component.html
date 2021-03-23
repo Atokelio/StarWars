@@ -15,12 +15,14 @@
   >
   </app-planet-list-item>
 
-  <div *ngIf="(error$ | async).message">
+  <div *ngIf="error$ | async">
     Появилась ошибка
-    <pre>{{(error$ | async).message}}</pre>
+    <pre>{{error$ | async}}</pre>
   </div>
 </div>
 
 <ng-template #loadingBlock>
   <p class="loading">Загрузка...</p>
 </ng-template>
+
+

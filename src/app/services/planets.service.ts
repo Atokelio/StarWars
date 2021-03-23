@@ -1,11 +1,9 @@
 import {environment} from '../../environments/environment';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {catchError, delay, pluck, tap} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {delay, pluck} from 'rxjs/operators';
 import {Planet} from '../interfaces/planet.interface';
-import {Store} from '@ngrx/store';
-import {PlanetsActions} from '../store/actions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,33 +11,10 @@ import {PlanetsActions} from '../store/actions';
 
 export class PlanetsService {
   wishlist$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  planets$: BehaviorSubject<Planet[]> = new BehaviorSubject<Planet[]>([]);
-  error$: BehaviorSubject<HttpErrorResponse> = new BehaviorSubject<HttpErrorResponse>({} as HttpErrorResponse);
 
   constructor(
-    private readonly http: HttpClient,
-    private readonly store: Store
+    private readonly http: HttpClient
     ) {
-  }
-
-  fetchPlanets(): void {
-    // this.loading$.next(true);
-    //
-    // this.getPlanets().pipe(
-    //   tap(() => this.loading$.next(false)),
-    //   catchError((err: any) => {
-    //     this.error$.next(err);
-    //     this.loading$.next(false);
-    //     return of([]);
-    //   })
-    // ).subscribe(
-    //   (planets: Planet[]) => {
-    //     // this.store.dispatch(new LoadPlanets(planets));
-    //   }
-    // );
-
-    this.store.dispatch(PlanetsActions.loadPlanets());
   }
 
   getPlanets(): Observable<Planet[]> {

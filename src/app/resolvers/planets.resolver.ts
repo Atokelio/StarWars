@@ -1,17 +1,18 @@
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {PlanetsService} from '../services/planets.service';
-import {Injectable} from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { PlanetsActions } from '../store/actions';
+import { Store } from '@ngrx/store';
 
 @Injectable({providedIn: 'root'})
 
 export class PlanetsResolver implements Resolve<any> {
   constructor(
-    private readonly planetsService: PlanetsService,
+    private readonly store: Store
   ) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): null {
-    this.planetsService.fetchPlanets();
+    this.store.dispatch(PlanetsActions.loadPlanets());
     return null;
   }
 }

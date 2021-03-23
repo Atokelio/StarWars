@@ -9,7 +9,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from './store/reducers';
 import {EffectsModule} from '@ngrx/effects';
-import {PlanetsEffects} from './store/planets.effect';
+import {PlanetsEffects} from './store/effects/planets.effect';
 
 @NgModule({
   declarations: [
