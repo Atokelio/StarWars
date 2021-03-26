@@ -1,43 +1,40 @@
-import {environment} from '../../environments/environment';
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {delay, pluck} from 'rxjs/operators';
-import {Planet} from '../interfaces/planet.interface';
+import { environment } from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { delay, map, pluck } from 'rxjs/operators';
+import { Planet } from '../interfaces/planet.interface';
+import { PlanetInitial } from '../interfaces/planet-initial.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PlanetsService {
-  wishlist$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
   constructor(
     private readonly http: HttpClient
-    ) {
+  ) {
   }
 
-  getPlanets(): Observable<Planet[]> {
-    return this.http.get(environment.planetsURL)
-      .pipe(delay(1500))
-      .pipe(pluck('results'));
+  getPlanets(): Observable<PlanetInitial[]> {
+    return this.http.get(environment.planetsURL).pipe(
+      delay(1500),
+      pluck('results')
+    );
   }
 
-  togglePlanet(planet: Planet): void {
-    const wishlist = [...this.wishlist$.value];
-    const inList = wishlist.includes(planet.name);
-    planet.inList = !planet.inList;
-
-    if (inList) {
-      wishlist.forEach((item, index) => {
-        if (planet.name === item) {
-          wishlist.splice(index, 1);
-        }
-      });
-    } else {
-      wishlist.push(planet.name);
-    }
-
-    this.wishlist$.next(wishlist);
+  decoratePlanets(): Observable<Planet[]> {
+    return this.getPlanets().pipe(
+      map((planets: PlanetInitial[]) => {
+        return planets.map((planet: PlanetInitial) => {
+          return {
+            name: planet.name,
+            diameter: planet.diameter,
+            population: planet.population,
+            inList: false
+          };
+        });
+      }));
   }
 }

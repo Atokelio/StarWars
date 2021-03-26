@@ -1,7 +1,5 @@
-export interface Planet {
-  id: number;
-  name: string;
-  diameter: number;
-  population: number;
+import { PlanetInitial } from './planet-initial.interface';
+
+export interface Planet extends PlanetInitial {
   inList: boolean;
 }

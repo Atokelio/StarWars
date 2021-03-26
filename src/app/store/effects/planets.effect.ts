@@ -13,7 +13,7 @@ export class PlanetsEffects {
 
   loadPlanets$ = createEffect(() => this.actions$.pipe(
     ofType(PlanetsActions.loadPlanets),
-    switchMap(() => this.planetsService.getPlanets().pipe(
+    switchMap(() => this.planetsService.decoratePlanets().pipe(
       map((planets: Planet[]) => PlanetsActions.planetsLoaded({planets})),
       catchError((err: HttpErrorResponse) => of(PlanetsActions.planetsError(err)))
     ))

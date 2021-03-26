@@ -1,7 +1,6 @@
 import { InjectionToken, Provider } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Planet } from '../../interfaces/planet.interface';
-import { PlanetsService } from '../../services/planets.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/reducers';
@@ -14,7 +13,9 @@ export const PLANETS: InjectionToken<Observable<Planet[]>> = new InjectionToken<
 
 export const planetsProvider: Provider = {
   provide: PLANETS,
-  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(map(state => state.planets)),
+  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(
+    map(({planets}) => planets)
+  ),
   deps: [Store]
 };
 
@@ -24,7 +25,9 @@ export const PLANETS_LOADING: InjectionToken<Observable<boolean>> = new Injectio
 
 export const planetsLoadingProvider: Provider = {
   provide: PLANETS_LOADING,
-  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(map(state => state.loading)),
+  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(
+    map(({loading}) => loading)
+  ),
   deps: [Store]
 };
 
@@ -34,6 +37,20 @@ export const PLANETS_ERROR: InjectionToken<Observable<HttpErrorResponse>> = new 
 
 export const planetsErrorProvider: Provider = {
   provide: PLANETS_ERROR,
-  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(map(state => state.error)),
+  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(
+    map(({error}) => error)
+  ),
+  deps: [Store]
+};
+
+export const WISH_LIST: InjectionToken<Observable<string[]>> = new InjectionToken<Observable<string[]>>(
+  'wishList'
+);
+
+export const wishListProvider: Provider = {
+  provide: WISH_LIST,
+  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(
+    map(({wishList}) => wishList)
+  ),
   deps: [Store]
 };

@@ -17,6 +17,10 @@ export interface LoadingPlanetsParams {
   loading: boolean;
 }
 
+export interface TogglePlanetsParams {
+  wishList: string[];
+}
+
 export const planetsLoaded = createAction(
   '[Planets] Loaded',
   props<LoadPlanetsParams>()
@@ -31,4 +35,10 @@ export const planetsLoading = createAction(
   '[Planets] Loading',
   props<LoadingPlanetsParams>()
 );
+
+export const planetsToggle = createAction(
+  '[Planets] Toggle',
+  props<TogglePlanetsParams>()
+);
+
 
