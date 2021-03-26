@@ -7,10 +7,7 @@ import { WantToVisitComponent } from './components/want-to-visit/want-to-visit.c
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { PlanetsListFacade } from './components/planet-list/facade';
-import { StoreModule } from '@ngrx/store';
-import { reducers } from './store/reducers';
-import { EffectsModule } from '@ngrx/effects';
-import { PlanetsEffects } from './store/effects/planets.effect';
+import { NgrxModule } from './modules/ngrx/ngrx.module';
 
 @NgModule({
   declarations: [
@@ -23,8 +20,7 @@ import { PlanetsEffects } from './store/effects/planets.effect';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([PlanetsEffects])
+    NgrxModule
   ],
   providers: [PlanetsListFacade],
   bootstrap: [AppComponent]

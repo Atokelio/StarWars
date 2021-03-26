@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { PlanetsActions } from '../store/actions';
+import { PlanetsActions } from '../modules/ngrx/actions';
 import { Store } from '@ngrx/store';
 
 @Injectable({providedIn: 'root'})

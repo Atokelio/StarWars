@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { Planet } from '../../interfaces/planet.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/reducers';
-import { planetsFeatureKey } from '../../store/reducers/planets.reducer';
+import { AppState } from '../../modules/ngrx/reducers';
+import { planetsFeatureKey } from '../../modules/ngrx/reducers/planets.reducer';
 import { map } from 'rxjs/operators';
 
 export const PLANETS: InjectionToken<Observable<Planet[]>> = new InjectionToken<Observable<Planet[]>>(

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Planet } from '../../interfaces/planet.interface';
+import { Planet } from '../../../interfaces/planet.interface';
 
 export const loadPlanets = createAction(
   '[Planets] Load'

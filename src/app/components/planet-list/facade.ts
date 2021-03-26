@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Planet } from '../../interfaces/planet.interface';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/reducers';
-import { PlanetsActions } from '../../store/actions';
-import { planetsFeatureKey, PlanetsState } from '../../store/reducers/planets.reducer';
+import { AppState } from '../../modules/ngrx/reducers';
+import { PlanetsActions } from '../../modules/ngrx/actions';
+import { planetsFeatureKey, PlanetsState } from '../../modules/ngrx/reducers/planets.reducer';
 import { first } from 'rxjs/operators';
 
 @Injectable()

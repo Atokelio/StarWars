@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { PlanetsActions } from '../actions';
-import { Planet } from '../../interfaces/planet.interface';
+import { Planet } from '../../../interfaces/planet.interface';
 
 export const planetsFeatureKey = 'planetsList';
 
