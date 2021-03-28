@@ -27,12 +27,12 @@ export class PlanetsService {
   decoratePlanets(): Observable<Planet[]> {
     return this.getPlanets().pipe(
       map((planets: PlanetInitial[]) => {
-        return planets.map((planet: PlanetInitial) => {
+        return planets.map((planet: PlanetInitial, idx) => {
           return {
+            id: idx + 1,
             name: planet.name,
             diameter: planet.diameter,
-            population: planet.population,
-            inList: false
+            population: planet.population
           };
         });
       }));

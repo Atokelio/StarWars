@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../modules/ngrx/reducers';
 import { planetsFeatureKey } from '../../modules/ngrx/reducers/planets.reducer';
+import { wishListFeatureKey } from '../../modules/ngrx/reducers/wish-list.reducer';
 import { map } from 'rxjs/operators';
 
 export const PLANETS: InjectionToken<Observable<Planet[]>> = new InjectionToken<Observable<Planet[]>>(
@@ -49,8 +50,20 @@ export const WISH_LIST: InjectionToken<Observable<string[]>> = new InjectionToke
 
 export const wishListProvider: Provider = {
   provide: WISH_LIST,
-  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(
+  useFactory: (store: Store<AppState>) => store.select(wishListFeatureKey).pipe(
     map(({wishList}) => wishList)
+  ),
+  deps: [Store]
+};
+
+export const PLANETS_SELECTED: InjectionToken<Observable<number[]>> = new InjectionToken<Observable<number[]>>(
+  'planetsSelected'
+);
+
+export const planetsSelectedProvider: Provider = {
+  provide: PLANETS_SELECTED,
+  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(
+    map(({planetsSelected}) => planetsSelected)
   ),
   deps: [Store]
 };

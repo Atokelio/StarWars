@@ -4,10 +4,10 @@
   <div>{{planet.population}}</div>
   <div>
     <button
-      [class]="planet.inList ? 'btn in-list' : 'btn'"
+      [class]="(planetsSelected$ | async).includes(planet.id) ? 'btn in-list' : 'btn'"
       (click)="togglePlanet()"
     >
-      {{planet.inList ? 'В списке' : 'Хочу посетить'}}
+      {{(planetsSelected$ | async).includes(planet.id)  ? 'В списке' : 'Хочу посетить'}}
     </button>
   </div>
 </div>

@@ -1,9 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Planet } from '../../../interfaces/planet.interface';
-
-export const loadPlanets = createAction(
-  '[Planets] Load'
-);
+import { Planet } from '../../../../interfaces/planet.interface';
 
 export interface LoadPlanetsParams {
   planets: Planet[];
@@ -18,8 +14,12 @@ export interface LoadingPlanetsParams {
 }
 
 export interface TogglePlanetsParams {
-  wishList: string[];
+  id: number;
 }
+
+export const loadPlanets = createAction(
+  '[Planets] Load'
+);
 
 export const planetsLoaded = createAction(
   '[Planets] Loaded',

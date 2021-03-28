@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { PlanetsService } from '../../../services/planets.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { PlanetsActions } from '../actions';
+import { PlanetsActions } from '../actions/planets';
 import { Planet } from '../../../interfaces/planet.interface';
 import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';

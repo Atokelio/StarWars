@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Planet } from '../../interfaces/planet.interface';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '../../modules/ngrx/reducers';
-import { PlanetsActions } from '../../modules/ngrx/actions';
-import { planetsFeatureKey, PlanetsState } from '../../modules/ngrx/reducers/planets.reducer';
+import { PlanetsActions } from '../../modules/ngrx/actions/planets';
+import { planetsFeatureKey } from '../../modules/ngrx/reducers/planets.reducer';
 import { first } from 'rxjs/operators';
+import { WishListActions } from '../../modules/ngrx/actions/wish-list';
 
 @Injectable()
 export class PlanetsListFacade {
@@ -13,24 +14,18 @@ export class PlanetsListFacade {
   ) {
   }
 
-  toggle({name}: Planet): void {
-    this.store.select(planetsFeatureKey)
+  toggle({id, name}: Planet): void {
+    this.store
       .pipe(
+        select(planetsFeatureKey),
         first()
       )
-      .subscribe((store: PlanetsState) => {
-
-        let wishList: string[] = [...store.wishList];
-        const planets: Planet[] = [...store.planets];
-
-        if (wishList.includes(name)) {
-          wishList = wishList.filter(planetName => planetName !== name);
-        } else {
-          wishList.push(name);
-        }
-
+      .subscribe(() => {
         this.store.dispatch(
-          PlanetsActions.planetsToggle({wishList})
+          PlanetsActions.planetsToggle({id})
+        );
+        this.store.dispatch(
+          WishListActions.wishListToggle({name})
         );
       });
   }
