@@ -18,7 +18,7 @@ export class PlanetsService {
   }
 
   getPlanets(): Observable<PlanetInitial[]> {
-    return this.http.get(environment.planetsURL).pipe(
+    return this.http.get<PlanetInitial[]>(environment.planetsURL).pipe(
       delay(1500),
       pluck('results')
     );

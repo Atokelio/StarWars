@@ -25,7 +25,7 @@ export class PlanetListComponent {
     private readonly planetsListFacade: PlanetsListFacade,
     @Inject(PLANETS) public readonly planets$: Observable<Planet[]>,
     @Inject(PLANETS_LOADING) public readonly loading$: Observable<boolean>,
-    @Inject(PLANETS_ERROR) public readonly error$: Observable<HttpErrorResponse>,
+    @Inject(PLANETS_ERROR) public readonly error$: Observable<HttpErrorResponse>
   ) {
   }
 
