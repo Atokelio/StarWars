@@ -7,7 +7,7 @@ import { planetsFeatureKey } from '../../modules/ngrx/reducers/planets.reducer';
 import { first } from 'rxjs/operators';
 import { WishListActions } from '../../modules/ngrx/actions/wish-list';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PlanetsListFacade {
   constructor(
     private readonly store: Store<AppState>

@@ -6,7 +6,6 @@ import { PlanetListItemComponent } from './components/planet-list/planet-list-it
 import { WantToVisitComponent } from './components/want-to-visit/want-to-visit.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { PlanetsListFacade } from './components/planet-list/facade';
 import { NgrxModule } from './modules/ngrx/ngrx.module';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { NgrxModule } from './modules/ngrx/ngrx.module';
     AppRoutingModule,
     NgrxModule
   ],
-  providers: [PlanetsListFacade],
   bootstrap: [AppComponent]
 })
 export class AppModule {

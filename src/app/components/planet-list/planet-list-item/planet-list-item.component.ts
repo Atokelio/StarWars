@@ -16,7 +16,7 @@ export class PlanetListItemComponent {
   @Output() onToggle: EventEmitter<Planet> = new EventEmitter<Planet>();
 
   constructor(
-    @Inject(PLANETS_SELECTED) public readonly planetsSelected$: Observable<number[]>
+    @Inject(PLANETS_SELECTED) public readonly planetsSelected$: Observable<number[]>,
   ) {
   }
 

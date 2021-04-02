@@ -1,31 +1,24 @@
-import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data';
 import { Observable } from 'rxjs';
-import { delay, map, pluck } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { Planet } from '../interfaces/planet.interface';
 import { PlanetInitial } from '../interfaces/planet-initial.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
-
-export class PlanetsService {
-
+@Injectable({providedIn: 'root'})
+export class PlanetsService extends DefaultDataService<Planet> {
   constructor(
-    private readonly http: HttpClient
+    http: HttpClient,
+    httpUrlGenerator: HttpUrlGenerator
   ) {
+    super('Planets', http, httpUrlGenerator);
   }
 
-  getPlanets(): Observable<PlanetInitial[]> {
-    return this.http.get<PlanetInitial[]>(environment.planetsURL).pipe(
+  getAll(): Observable<Planet[]> {
+    return super.getAll().pipe(
       delay(1500),
-      pluck('results')
-    );
-  }
-
-  decoratePlanets(): Observable<Planet[]> {
-    return this.getPlanets().pipe(
+      map((res: any) => res.results),
       map((planets: PlanetInitial[]) => {
         return planets.map((planet: PlanetInitial, idx) => {
           return {
@@ -35,6 +28,7 @@ export class PlanetsService {
             population: planet.population
           };
         });
-      }));
+      })
+    );
   }
 }

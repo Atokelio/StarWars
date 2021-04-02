@@ -11,24 +11,24 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class PlanetsEffects {
 
-  loadPlanets$ = createEffect(() => this.actions$.pipe(
-    ofType(PlanetsActions.loadPlanets),
-    switchMap(() => this.planetsService.decoratePlanets().pipe(
-      map((planets: Planet[]) => PlanetsActions.planetsLoaded({planets})),
-      catchError((err: HttpErrorResponse) => of(PlanetsActions.planetsError(err)))
-    ))
-    )
-  );
-
-  loading$ = createEffect(() => this.actions$.pipe(
-    ofType(PlanetsActions.loadPlanets),
-    map(() => PlanetsActions.planetsLoading({loading: true})))
-  );
-
-  loadingFinish$ = createEffect(() => this.actions$.pipe(
-    ofType(PlanetsActions.planetsLoaded, PlanetsActions.planetsError),
-    map(() => PlanetsActions.planetsLoading({loading: false})))
-  );
+  // loadPlanets$ = createEffect(() => this.actions$.pipe(
+  //   ofType(PlanetsActions.loadPlanets),
+  //   switchMap(() => this.planetsService.decoratePlanets().pipe(
+  //     map((planets: Planet[]) => PlanetsActions.planetsLoaded({planets})),
+  //     catchError((err: HttpErrorResponse) => of(PlanetsActions.planetsError(err)))
+  //   ))
+  //   )
+  // );
+  //
+  // loading$ = createEffect(() => this.actions$.pipe(
+  //   ofType(PlanetsActions.loadPlanets),
+  //   map(() => PlanetsActions.planetsLoading({loading: true})))
+  // );
+  //
+  // loadingFinish$ = createEffect(() => this.actions$.pipe(
+  //   ofType(PlanetsActions.planetsLoaded, PlanetsActions.planetsError),
+  //   map(() => PlanetsActions.planetsLoading({loading: false})))
+  // );
 
   constructor(
     private actions$: Actions,
