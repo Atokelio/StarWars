@@ -4,6 +4,9 @@ const entityMetadata: EntityMetadataMap = {
   Planets: {}
 };
 
+// export const pluralNames = { Planets: 'planets' };
+
 export const entityConfig: EntityDataModuleConfig = {
-  entityMetadata
+  entityMetadata,
+  // pluralNames
 };

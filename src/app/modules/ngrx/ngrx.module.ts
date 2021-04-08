@@ -13,8 +13,8 @@ import { EntitiesModule } from './entities/entities.module';
     CommonModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([PlanetsEffects]),
-    StoreDevtoolsModule.instrument(),
-    EntitiesModule
+    EntitiesModule,
+    StoreDevtoolsModule.instrument()
   ]
 })
 export class NgrxModule {
