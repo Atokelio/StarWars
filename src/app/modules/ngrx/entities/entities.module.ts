@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EntityDataModule, EntityDataService } from '@ngrx/data';
+import { DefaultHttpUrlGenerator, EntityDataModule, EntityDataService, HttpUrlGenerator } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { PlanetsService } from '../../../services/planets.service';
+import { CustomizeHttpUrlGenerator } from './customize-http-generator';
+import { Entities } from './entities';
 
 @NgModule({
   declarations: [],
@@ -11,6 +13,8 @@ import { PlanetsService } from '../../../services/planets.service';
     EntityDataModule.forRoot(entityConfig),
   ],
   providers: [
+    { provide: HttpUrlGenerator, useClass: CustomizeHttpUrlGenerator },
+    { provide: DefaultHttpUrlGenerator, useClass: CustomizeHttpUrlGenerator },
   ],
 })
 export class EntitiesModule {
@@ -18,6 +22,6 @@ export class EntitiesModule {
     entityDataService: EntityDataService,
     planetsService: PlanetsService,
   ) {
-    entityDataService.registerService('Planets', planetsService);
+    entityDataService.registerService(Entities.Planets, planetsService);
   }
 }

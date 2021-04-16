@@ -20,8 +20,9 @@ export class CustomizeHttpUrlGenerator extends DefaultHttpUrlGenerator {
         root = rootUrls[entityName];
       }
 
+
       const nRoot: string = normalizeRoot(root);
-      const url: string = `${nRoot}/${this.aPluralizer.pluralize(entityName)}/`.toLowerCase();
+      const url: string = `${nRoot}/${entityName}/`.toLowerCase();
 
       resourceUrls = {
         entityResourceUrl: url,
