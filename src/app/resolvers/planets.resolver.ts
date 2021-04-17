@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { EntityActionFactory, EntityOp } from '@ngrx/data';
+import { Entities } from '../modules/ngrx/entities/entities';
 
 @Injectable({providedIn: 'root'})
 
@@ -14,7 +15,7 @@ export class PlanetsResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): null {
     this.store.dispatch(
-      this.entityActionFactory.create('Planets', EntityOp.QUERY_ALL)
+      this.entityActionFactory.create(Entities.Planets, EntityOp.QUERY_ALL)
     );
     return null;
   }

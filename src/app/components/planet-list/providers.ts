@@ -2,11 +2,13 @@ import { InjectionToken, Provider } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Planet } from '../../interfaces/planet.interface';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '../../modules/ngrx/reducers';
 import { planetsFeatureKey } from '../../modules/ngrx/reducers/planets.reducer';
 import { wishListFeatureKey } from '../../modules/ngrx/reducers/wish-list.reducer';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { EntitySelectorsFactory } from '@ngrx/data';
+import { Entities } from '../../modules/ngrx/entities/entities';
 
 export const PLANETS: InjectionToken<Observable<Planet[]>> = new InjectionToken<Observable<Planet[]>>(
   'planets'
@@ -14,10 +16,12 @@ export const PLANETS: InjectionToken<Observable<Planet[]>> = new InjectionToken<
 
 export const planetsProvider: Provider = {
   provide: PLANETS,
-  useFactory: (store: Store<AppState>) => store.select(planetsFeatureKey).pipe(
-    map(({planets}) => planets)
+  useFactory: (store: Store<AppState>, entitySelectorsFactory: EntitySelectorsFactory) => store.pipe(
+    select(
+      entitySelectorsFactory.create(Entities.Planets).selectEntities
+    )
   ),
-  deps: [Store]
+  deps: [Store, EntitySelectorsFactory]
 };
 
 export const PLANETS_LOADING: InjectionToken<Observable<boolean>> = new InjectionToken<Observable<boolean>>(
